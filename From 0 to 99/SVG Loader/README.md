@@ -7,3 +7,7 @@ Here you find the `svg` syntax drawing the elements of the loader. I developed t
 ## Util
 
 Here you find the svg graphic updated with group elements. These are added to facilitate, and in some case enable, the loading animation.
+
+## Animation
+
+Here you find the svg graphic animated with `@keyframes`.

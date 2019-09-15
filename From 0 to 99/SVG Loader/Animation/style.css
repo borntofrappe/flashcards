@@ -1,0 +1,99 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+body {
+  min-height: 100vh;
+  background: hsl(0, 0%, 95%);
+  /* center the loader in the viewport */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#mouth {
+  transform: scale(1); /* 0.5 - 1 range */
+  animation: scaleGrin 7.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+#cheek {
+  transform: scale(1); /* 0.5 - 1 range */
+  animation: scaleGrin 7.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+#face {
+  transform: scaleY(1); /* 0.7 - 1 range */
+  animation: scaleFace 7.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* ! the rotation  and translation need to occur simultaneously to move the shapes from one side to the other in an arc*/
+.rotate {
+  transform: rotate(0deg); /* 40 - -40 range */
+  animation: rotate 7.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+#translate {
+  transform: translateY(0px); /* 0 - 15 range */
+  animation: translate 7.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.particle {
+  transform: translateY(0px) scale(1); /* translate from 5px, scale from 0 (be sure to stagger the transform property for the different particles) */
+  animation: sparkle 1.25s 6.75s cubic-bezier(0.68, -0.55, 0.265, 1.55) both;
+}
+#particles g:nth-last-of-type(1) .particle {
+  animation-delay: 6.8s;
+}
+#particles g:nth-last-of-type(2) .particle {
+  animation-delay: 6.85s;
+}
+@keyframes scaleGrin {
+  5% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleFace {
+  5% {
+    transform: scale(0.7);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes rotate {
+  5% {
+    transform: rotate(60deg);
+  }
+  100% {
+    transform: rotate(-60deg);
+  }
+}
+@keyframes translate {
+  5%,
+  95% {
+    transform: translateY(12px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes sparkle {
+  0% {
+    transform: translateY(15px) scale(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0;
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(-5px) scale(1);
+  }
+  100% {
+    transform: translateY(0px) scale(1);
+    opacity: 0;
+  }
+}
