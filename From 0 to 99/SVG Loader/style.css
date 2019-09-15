@@ -6,14 +6,14 @@
 body {
   min-height: 100vh;
   background: hsl(0, 0%, 95%);
-  /* display the svg and progress element in a column */
+  /* display the svg elements in a column */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: hsl(195, 100%, 60%);
 }
-/* separate the svg from the progress underneath */
+/* separate the loader from the progress underneath */
 svg#loader {
   width: 180px;
   height: auto;
@@ -23,22 +23,13 @@ svg#loader {
 svg#progress {
   width: 250px;
   height: auto;
+  display: block;
 }
 
-#mouth {
-  transform: scale(1); /* 0.5 - 1 range */
-  animation: scaleGrin 7.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-#cheek {
-  transform: scale(1); /* 0.5 - 1 range */
-  animation: scaleGrin 7.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-#face {
-  transform: scaleY(1); /* 0.7 - 1 range */
-  animation: scaleFace 7.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-/* ! the rotation  and translation need to occur simultaneously to move the shapes from one side to the other in an arc*/
+/* main animation
+animate the group elements for the rocking animation
+! the rotation  and translation need to occur simultaneously to move the shapes from one side to the other in an arc
+*/
 .rotate {
   transform: rotate(0deg); /* 40 - -40 range */
   animation: rotate 7.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -46,35 +37,6 @@ svg#progress {
 #translate {
   transform: translateY(0px); /* 0 - 15 range */
   animation: translate 7.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-.particle {
-  transform: translateY(0px) scale(1); /* translate from 5px, scale from 0 (be sure to stagger the transform property for the different particles) */
-  animation: sparkle 1.25s cubic-bezier(0.68, -0.55, 0.265, 1.55) both;
-  animation-delay: calc(0.9 * 7.5s);
-}
-#particles g:nth-last-of-type(1) .particle {
-  animation-delay: calc(0.91 * 7.5s);
-}
-#particles g:nth-last-of-type(2) .particle {
-  animation-delay: calc(0.92 * 7.5s);
-}
-@keyframes scaleGrin {
-  5% {
-    transform: scale(0.5);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-@keyframes scaleFace {
-  5% {
-    transform: scale(0.7);
-  }
-  100% {
-    transform: scale(1);
-  }
 }
 
 @keyframes rotate {
@@ -95,6 +57,52 @@ svg#progress {
   }
 }
 
+/* support animation
+animate the shapes inside the loader for the smiling animation
+*/
+#face {
+  transform: scaleY(1); /* 0.7 - 1 range */
+  animation: scaleFace 7.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+#mouth,
+#cheek {
+  transform: scale(1); /* 0.5 - 1 range */
+  animation: scaleGrin 7.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes scaleFace {
+  5% {
+    transform: scale(0.7);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes scaleGrin {
+  5% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* closing animation
+animate the use elements to briefly show the particles
+*/
+.particle {
+  transform: translateY(0px) scale(1); /* translate from 5px, scale from 0 */
+  animation: sparkle 1.25s cubic-bezier(0.68, -0.55, 0.265, 1.55) both;
+  animation-delay: calc(0.9 * 7.5s);
+}
+/* stagger the animation of the other two particles */
+#particles g:nth-last-of-type(1) .particle {
+  animation-delay: calc(0.91 * 7.5s);
+}
+#particles g:nth-last-of-type(2) .particle {
+  animation-delay: calc(0.92 * 7.5s);
+}
+
 @keyframes sparkle {
   0% {
     transform: translateY(15px) scale(0);
@@ -113,6 +121,9 @@ svg#progress {
   }
 }
 
+/* secondary animation
+animate the bar in the clipPath element to show the makeshift progress bar
+*/
 #clip use {
   animation: translateClip 7.5s cubic-bezier(0.445, 0.05, 0.55, 0.95) forwards;
 }

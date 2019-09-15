@@ -9,9 +9,9 @@
 </head>
 <body>
 
-	<!-- svg loader -->
+	<!-- svg describing the loader -->
     <svg id="loader" viewBox="0 0 100 100" width="180" height="180">
-        <!-- define a path element for the particle
+        <!-- define a path element for the individual particle
         this to have control of the individual particles through use elements
         -->
         <defs>
@@ -32,7 +32,8 @@
                     <g transform="translate(3 9) scale(0.8)">
                         <use class="particle" href="#particle"></use>
                     </g>
-				</g>
+                </g>
+                <!-- copy the three particles on the opposite (left) side of the graphic -->
 				<use href="#particles" transform="scale(-1 1) translate(0 -10)"></use>
 			</g>
 
@@ -47,7 +48,6 @@
                 to use the same rotation in step 1) and 3) use a group element which flips the graphic around the y axis
                 you could add another group post-rotation to flip the graphic backwards, but it is unnecessary given the symmetry of the details
             -->
-
             <g class="rotate" transform="rotate(0)">
                 <g id="translate" transform="translate(0 0)">
                     <g transform="scale(-1 1)">
@@ -91,12 +91,15 @@
                 </g>
             </g>
         </g>
-
     </svg>
 
+    <!-- svg fabricating a makeshift progress bar -->
     <svg id="progress" viewBox="0 0 120 10" width="240" height="20">
         <defs>
             <rect id="bar" rx="5" x="0" y="0" width="120" height="10"></rect>
+            <!-- as to use only transform properties, use a clipPath element
+            translate the use element to 0 to have the clip overlap on and show the colored bar
+            -->
             <clipPath id="clip">
                 <use transform="translate(-120 0)" href="#bar"></use>
             </clipPath>
@@ -106,7 +109,6 @@
             <use clip-path="url(#clip)" href="#bar"></use>
         </g>
     </svg>
-
 
 </body>
 </html>
