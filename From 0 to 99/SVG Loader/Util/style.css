@@ -1,0 +1,34 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+body {
+  min-height: 100vh;
+  background: hsl(0, 0%, 95%);
+  /* center the loader in the viewport */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#mouth {
+  transform: scale(1); /* 0.5 - 1 range */
+}
+#cheek {
+  transform: scale(1); /* 0.5 - 1 range */
+}
+#face {
+  transform: scaleY(1); /* 0.7 - 1 range */
+}
+
+/* ! the rotation  and translation need to occur simultaneously to move the shapes from one side to the other in an arc*/
+.rotate {
+  transform: rotate(0deg); /* 40 - -40 range */
+}
+#translate {
+  transform: translateY(0px); /* 0 - 15 range */
+}
+
+.particle {
+  transform: translateY(0px) scale(1); /* translate from 5px, scale from 0 (be sure to stagger the transform property for the different particles) */
+}

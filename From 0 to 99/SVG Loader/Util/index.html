@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Loader - Utility Groups</title>
+    <link rel="stylesheet" href="utility.css">
+</head>
+<body>
+
+	<!-- svg loader -->
+    <svg viewBox="0 0 100 100" width="200" height="200">
+		<style>
+			svg {
+				color: hsl(195, 100%, 60%);
+			}
+        </style>
+        <!-- define a path element for the particle
+        this to have control of the individual particles through use elements
+        -->
+        <defs>
+            <path id="particle" d="M -3 0 a 3 3 0 0 0 3 -3 a 3 3 0 0 0 3 3 a 3 3 0 0 0 -3 3 a 3 3 0 0 0 -3 -3" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+        </defs>
+		<!-- center the shapes in the viewBox -->
+		<g transform="translate(50 50)">
+			<!-- particles -->
+			<g fill="currentColor">
+				<g id="particles" transform="translate(35 -40)">
+                    <!-- translate and scale the particles from the center of the path element
+                    ! since the scaling occurs through the transform property, wrap the particles in a group element to position/rescale the shapes (to have particles of different size)
+                    -->
+                    <use class="particle" href="#particle"></use>
+                    <g transform="translate(-5 8) scale(0.6)">
+                        <use class="particle" href="#particle"></use>
+                    </g>
+                    <g transform="translate(3 9) scale(0.8)">
+                        <use class="particle" href="#particle"></use>
+                    </g>
+				</g>
+				<use href="#particles" transform="scale(-1 1)"></use>
+			</g>
+
+			<circle cx="0" cy="0" r="35" fill="currentColor"></circle>
+
+            <!-- wrap the details in group elements to achieve the rotation from one side to the other
+            the idea is to
+                1. rotate the group
+                2. translate the element in the new direction
+                3. rotate the group back
+
+                to use the same rotation in step 1) and 3) use a group element which flips the graphic around the y axis
+                you could add another group post-rotation to flip the graphic backwards, but it is unnecessary given the symmetry of the details
+            -->
+
+            <g class="rotate" transform="rotate(0)">
+                <g id="translate" transform="translate(0 0)">
+                    <g transform="scale(-1 1)">
+                        <g class="rotate" transform="rotate(0)">
+                            <!-- details with semi-transparent shapes
+                            this allows for a variety of colors (the quality of the details depends on the lightness/darkness of the hue)
+                            -->
+                            <g opacity="0.3">
+                                <!-- dark variants for the brows, eyes and mouth -->
+                                <g fill="hsl(0, 0%, 0%)">
+                                    <!-- scale the eyes and brows from a point below the shapes (to get them closer to the mouth underneath) -->
+                                    <g transform="translate(0 10)">
+                                        <g id="face">
+                                            <path id="brow" d="M -10.5 -25 a 2.5 2.5 0 0 1 5 0 a 4 4 0 0 0 -5 0" stroke="hsl(0, 0%, 0%)" stroke-width="1" stroke-linejoin="round" stroke-linecap="round"></path>
+                                            <use href="#brow" transform="scale(-1 1)"></use>
+                                            <g>
+                                                <ellipse id="eye" cx="-8" cy="-12" rx="4" ry="8"></ellipse>
+                                                <use href="#eye" transform="scale(-1 1)"></use>
+                                            </g>
+                                        </g>
+                                    </g>
+
+                                    <!-- scale the mouth from the bottom center of the path -->
+                                    <g transform="translate(0 18)">
+                                        <path id="mouth" d="M 0 0 a 7 7 0 0 0 7 -7 h -14 a 7 7 0 0 0 7 7" stroke="hsl(0, 0%, 0%)" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"></path>
+                                    </g>
+                                </g>
+                                <!-- light variants for the cheeks -->
+                                <g fill="hsl(0, 0%, 100%)">
+                                    <!-- scale the cheek from the bottom of the ellipse
+                                    horizontally shift the shape to have the scale push the cheeks closer to the center of the face
+                                     -->
+                                    <g id="cheek-container" transform="translate(-8 10)">
+                                        <ellipse id="cheek" cx="-10" cy="-4" rx="4.5" ry="4"></ellipse>
+                                    </g>
+                                    <use href="#cheek-container" transform="scale(-1 1)"></use>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+		</g>
+    </svg>
+
+</body>
+</html>
