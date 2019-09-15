@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SVG Loader - Design</title>
+</head>
+<body>
+
+    <!-- svg loader -->
+    <svg viewBox="0 0 100 100" width="200" height="200">
+		<style>
+			svg {
+				color: hsl(195, 100%, 60%);
+			}
+		</style>
+		<!-- center the shapes in the viewBox -->
+		<g transform="translate(50 50)">
+			<!-- particles -->
+			<g fill="currentColor">
+				<g id="particles" transform="translate(35 -40)">
+					<path id="particle" d="M -3 0 a 3 3 0 0 0 3 -3 a 3 3 0 0 0 3 3 a 3 3 0 0 0 -3 3 a 3 3 0 0 0 -3 -3" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+					<use href="#particle" transform="translate(-5 8) scale(0.6)"></use>
+					<use href="#particle" transform="translate(3 9) scale(0.8)"></use>
+				</g>
+				<use href="#particles" transform="scale(-1 1)"></use>
+			</g>
+
+			<!-- face -->
+			<circle cx="0" cy="0" r="35" fill="currentColor"></circle>
+			<!-- details with semi-transparent shapes
+			this allows for a variety of colors (the quality of the details depends on the lightness/darkness of the hue)
+			-->
+			<g opacity="0.3">
+				<!-- dark variants for the brows, eyes and mouth -->
+				<g fill="hsl(0, 0%, 0%)">
+					<path id="brow" d="M -10.5 -18 a 2.5 2.5 0 0 1 5 0 a 4 4 0 0 0 -5 0" stroke="hsl(0, 0%, 0%)" stroke-width="1" stroke-linejoin="round" stroke-linecap="round"></path>
+					<use href="#brow" transform="scale(-1 1)"></use>
+					<g>
+						<ellipse id="eye" cx="-8" cy="-5" rx="4" ry="8"></ellipse>
+						<use href="#eye" transform="scale(-1 1)"></use>
+					</g>
+
+					<path d="M 0 18 a 7 7 0 0 0 7 -7 h -14 a 7 7 0 0 0 7 7" stroke="hsl(0, 0%, 0%)" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"></path>
+				</g>
+				<!-- light variants for the cheeks -->
+				<g fill="hsl(0, 0%, 100%)">
+					<ellipse id="cheek" cx="-18" cy="5" rx="4.5" ry="4"></ellipse>
+					<use href="#cheek" transform="scale(-1 1)"></use>
+				</g>
+			</g>
+		</g>
+    </svg>
+
+  <script src="script.js"></script>
+</body>
+</html>
