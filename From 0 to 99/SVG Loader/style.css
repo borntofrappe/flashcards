@@ -93,14 +93,14 @@ animate the use elements to briefly show the particles
 .particle {
   transform: translateY(0px) scale(1); /* translate from 5px, scale from 0 */
   animation: sparkle 1.25s cubic-bezier(0.68, -0.55, 0.265, 1.55) both;
-  animation-delay: calc(0.9 * 7.5s);
+  animation-delay: 6.8s;
 }
 /* stagger the animation of the other two particles */
-#particles g:nth-last-of-type(1) .particle {
-  animation-delay: calc(0.91 * 7.5s);
+#particles g:nth-of-type(1) .particle {
+  animation-delay: 6.86s;
 }
-#particles g:nth-last-of-type(2) .particle {
-  animation-delay: calc(0.92 * 7.5s);
+#particles g:nth-of-type(2) .particle {
+  animation-delay: 6.92s;
 }
 
 @keyframes sparkle {
@@ -122,13 +122,14 @@ animate the use elements to briefly show the particles
 }
 
 /* secondary animation
-animate the bar in the clipPath element to show the makeshift progress bar
+animate the clipped bar to show the makeshift progress bar
 */
-#clip use {
+#clip-bar {
+  transform: translateX(-120px);
   animation: translateClip 7.5s cubic-bezier(0.445, 0.05, 0.55, 0.95) forwards;
 }
 @keyframes translateClip {
-  to {
+  100% {
     transform: translateX(0);
   }
 }

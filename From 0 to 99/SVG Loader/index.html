@@ -96,17 +96,19 @@
     <!-- svg fabricating a makeshift progress bar -->
     <svg id="progress" viewBox="0 0 120 10" width="240" height="20">
         <defs>
+            <!-- define a bar to re-use the shape in the clip and in multiple colors -->
             <rect id="bar" rx="5" x="0" y="0" width="120" height="10"></rect>
-            <!-- as to use only transform properties, use a clipPath element
-            translate the use element to 0 to have the clip overlap on and show the colored bar
-            -->
             <clipPath id="clip">
-                <use transform="translate(-120 0)" href="#bar"></use>
+                <use  href="#bar"></use>
             </clipPath>
         </defs>
+        <!-- include two copies of the progress bar, one of which clipped to be hidden by default -->
         <g fill="currentColor">
             <use href="#bar" opacity="0.3"></use>
-            <use clip-path="url(#clip)" href="#bar"></use>
+            <!-- translate the use element to 0 to show the colored variant -->
+            <g clip-path="url(#clip)">
+                <use id="clip-bar" transform="translate(-120 0)" href="#bar"></use>
+            </g>
         </g>
     </svg>
 
