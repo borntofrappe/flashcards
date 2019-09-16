@@ -9,3 +9,7 @@ A couple of things I'd like to mention with regard to this loader:
 - the details of the graphic are added through semi-transparent shapes. This means you can change the main color and still retain the eyes, brows, mouth and cheeks. Not every color is perfect match, but as long as you consider the lightness of the chosen color, this makes it possible to use multiple hues.
 
 - the animation is built with keyframes and using only `transform` and `opacity`. Originally, I decided to use these two properties for performance reason, but truthfully, it became as much of a challenge to see what is possible with a very limited subset of properties.
+
+## Svelte App
+
+Jere you find the application developed through the [svelte framework](https://svelte.dev/) and with the `degit` scaffolding tool.
