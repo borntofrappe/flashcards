@@ -1,6 +1,11 @@
+// utility function to return a random number in the [0-100] range
+export function randomNumber() {
+  return Math.floor(Math.random() * 101);
+}
+
 // utility function translating numbers in the [0-100] range into French
 // for a more thorough explanation https://www.thefrenchexperiment.com/learn-french/numbers
-export function translateNumber(number) {
+export function frenchNumber(number) {
   // array of numbers which are meant to be memorized
   // the remaining numbers are build on top of these values
   const startingNumbers = [
