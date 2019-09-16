@@ -1,5 +1,7 @@
 # Svelte App
 
+## Setup
+
 The folder is set up with the following series of commands:
 
 1. clone the template repo.
@@ -22,3 +24,7 @@ The folder is set up with the following series of commands:
   ```
 
 The application is developed in the **src** folder, but the **public** folder is also modified, to change the global stylesheet and document title.
+
+## Utils
+
+In `utils.js` I created a utility function to translate numbers into French. I am positive there is a much better way to provide a translation, especially for such a limited range, but the function was an excellent excuse to practice with vanilla JavaScript.
