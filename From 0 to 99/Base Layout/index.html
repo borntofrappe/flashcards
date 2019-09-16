@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Base Layout</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!--
+    ! this is a proof of concept for the final layout
+    the interaction included through the buttons is experimental to say the least
+
+    .flashcards
+        .deck, container for the cards;
+            .card, component describing the card;
+
+        .controls, container for the buttons allowing to flip the current card or introduce a new one
+    -->
+    <div class="flashcards">
+        <!-- the idea is to show one card at a time, and introduce new cards as the current one is removed -->
+        <main class="deck">
+            <!-- each card has a .front and .back container to describe the two sides of the cards -->
+            <article class="card">
+                <div class="card__front">
+                    <h1>18</h1>
+                </div>
+                <div class="card__back">
+                    <h2>Dix-huit</h2>
+                </div>
+            </article>
+            <article class="card card--new">
+                <div class="card__front">
+                    <h1>25</h1>
+                </div>
+                <div class="card__back">
+                    <h2>Vingt-cinq</h2>
+                </div>
+            </article>
+        </main>
+
+        <section class="controls">
+            <button id="flip">Flip</button>
+            <button id="new-card">New Card</button>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

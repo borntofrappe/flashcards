@@ -1,0 +1,145 @@
+@import url("https://fonts.googleapis.com/css?family=Ubuntu:400,700&display=swap");
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+body {
+  background: hsl(0, 0%, 95%);
+  color: hsl(0, 0%, 20%);
+  font-family: "Ubuntu", sans-serif;
+}
+/* display the elements in a column, centered in the viewport */
+.flashcards {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+/* add perspective to the deck, to allow 3d transform properties in the nested elements
+on top of the perspective style the .deck container to have a width width and height
+*/
+.deck {
+  perspective: 1000px;
+  position: relative;
+  height: 250px;
+  width: 250px;
+  border-radius: 20px;
+}
+/* absolute position the cards to cover the entirety of the parent's width and height */
+.card {
+  padding: 5rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  /* transition for the transform properties, to flip and translate the card */
+  transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+  /* preserve the 3d of the deck for the nested faces */
+  transform-style: preserve-3d;
+}
+
+/* absolute position the faces to cover the same surface described by the card */
+.card__front,
+.card__back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* backface to hide the text when the faces are flipped */
+  backface-visibility: hidden;
+
+  /* display the content in the center of the card */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0.25rem;
+  border-radius: inherit;
+  /* add the background to the faces to fade out the cards by changing the faces' opacity (see below for why the opacity is not changed on the parent card) */
+  background: hsl(0, 0%, 100%);
+  box-shadow: 0 0 10px -9px hsl(0, 0%, 25%), 0 0 3px -2px hsl(0, 0%, 25%);
+}
+.card__front h1 {
+  font-size: 5rem;
+}
+.card__back h2 {
+  font-size: 2.25rem;
+}
+/* by default rotate the back of the card */
+.card__back {
+  transform: rotateY(180deg);
+}
+
+/* when the card has an additional class of .flip rotate the entire container (hence showing the back of the card) */
+.card.flip {
+  transform: rotateY(-180deg);
+}
+
+/* ! EXPERIMENTAL
+the idea is to ultimately change the transform and opacity values of the cards as they are introduced
+the following is meant to give a rough idea
+*/
+
+/* to introduce a card, translate the element from above the deck
+in the script the card is shown by removing the class
+*/
+.card--new {
+  transform: translateY(-100%) translateZ(100px);
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* to remove a card translate the card away and hide the nested faces */
+.card--old {
+  transform: translateZ(-200px);
+}
+/* ! the opacity is updated on the faces and not the parent card to avoid conflicts with 3d transform properties
+it seems changing the opacity has the effect of resetting the transfom-style property to **flat**
+https://css-tricks.com/things-watch-working-css-3d/
+*/
+.card--old .card__front,
+.card--old .card__back {
+  transition: all 1s ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* in case the card is flipped, the translation occurs after the rotation, and in the opposite direction
+! again, this is experimental, and tailored for the hard-coded layout
+*/
+.card.flip.card--old {
+  transform: rotateY(-180deg) translateZ(200px);
+}
+/* at least on firefox, changing the opacity of the faces means the two sides are briefly shown at the same moment
+to avoid this immediately hide the front of the card (which is technically on the back as the card is flipped)
+*/
+.card.flip.card--old .card__front {
+  transition: none;
+}
+
+/* display the buttons in a row with a minimum width close to the deck's own size */
+.controls {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+  min-width: 200px;
+}
+.controls button + button {
+  margin-top: 1rem;
+}
+button {
+  box-shadow: 0 1px 5px -3px hsl(0, 0%, 25%);
+  flex-grow: 1;
+  background: none;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 20px;
+  background: hsl(0, 0%, 100%);
+  font-family: inherit;
+}
