@@ -1,12 +1,33 @@
 <script>
-import { fade } from 'svelte/transition';
+  function panOut(node, { duration = 500, depth = -200, isFlipped = false }) {
+		return {
+			duration,
+			css: t => {
+				return `
+					transform: rotateY(${isFlipped ? '180deg' : '0deg'}) translateZ(${isFlipped ? -depth * (1 - t) : depth * (1 - t)}px);
+				`
+			}
+		};
+  }
 
+  function slideIn(node, { duration = 500,  depth = 200 }) {
+		return {
+      duration,
+			css: t => {
+        return `
+					opacity: ${t};
+					transform: translateY(-${100 * (1 - t)}%) translateZ(${depth * (1 - t)}px);
+				`
+			}
+		};
+  }
 
-export let number;
-export let french;
-export let isFlipped;
-export let isHidden;
-export let ref;
+  import { fade } from 'svelte/transition';
+
+  export let number;
+  export let french;
+  export let isFlipped;
+  export let ref;
 
 </script>
 
@@ -71,11 +92,12 @@ export let ref;
   }
 </style>
 
-<article transition:fade class={isFlipped ? 'card flip' : isHidden ? 'card hidden' : 'card'} bind:this={ref}>
-    <div class="card__front">
+
+<article in:slideIn out:panOut={{isFlipped}} class={isFlipped ? 'card flip' : 'card'} bind:this={ref}>
+    <div out:fade class="card__front">
         <h1>{number}</h1>
     </div>
-    <div class="card__back">
+    <div out:fade class="card__back">
         <h2>{french}</h2>
     </div>
 </article>

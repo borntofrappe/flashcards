@@ -1,32 +1,36 @@
 <script>
-import { randomNumber, frenchNumber } from './utils.js';
+  import { randomNumber, frenchNumber } from './utils.js';
 
-import Card from './Card.svelte';
-import Controls from './Controls.svelte';
+  import Card from './Card.svelte';
 
-let deck;
-let cards = Array(2).fill().map(() => {
-  const number = randomNumber();
-  const french = frenchNumber(number);
-  let ref;
-  let isFlipped = false;
-  return { number, french, ref, isFlipped };
-})
+  let cards = Array(1).fill().map(() => {
+    const number = randomNumber();
+    const french = frenchNumber(number);
+    let ref;
+    let isFlipped = false;
+    let id = Math.random()
+    return { number, french, ref, isFlipped, id };
+  })
 
 
-const flipCard = () => cards[0].isFlipped = !cards[0].isFlipped;
-const newCard = () => {
-  const number = randomNumber();
-  const french = frenchNumber(number);
-  let ref;
-  let isFlipped = false;
-  cards = [...cards.slice(1), {
-    number,
-    french,
-    ref,
-    isFlipped
-  }];
-};
+  const flipCard = () => cards[0].isFlipped = !cards[0].isFlipped;
+
+  const newCard = () => {
+    const number = randomNumber();
+    const french = frenchNumber(number);
+    let ref;
+    let isFlipped = false;
+    let id = Math.random()
+    cards = [...cards.slice(1), {
+      number,
+      french,
+      ref,
+      isFlipped,
+      id
+    }];
+  };
+
+  $: console.log(cards);
 </script>
 
 <style>
@@ -74,9 +78,9 @@ const newCard = () => {
 </style>
 
 <div class="flashcards">
-  <main class="deck" bind:this={deck}>
-    {#each cards as { number, french, ref, isFlipped }, i}
-      <Card {number} {french} {ref} {isFlipped} isHidden={i === 1} />
+  <main class="deck">
+    {#each cards as card (card.id)}
+      <Card {...card} />
     {/each}
   </main>
 
