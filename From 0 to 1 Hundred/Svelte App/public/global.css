@@ -9,6 +9,7 @@ body {
   background: hsl(0, 0%, 95%);
   color: hsl(0, 0%, 20%);
   font-family: "Ubuntu", sans-serif;
+  /* center the content in the viewport */
   min-height: 100vh;
   display: flex;
   flex-direction: column;

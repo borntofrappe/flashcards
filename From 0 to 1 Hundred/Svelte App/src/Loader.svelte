@@ -1,4 +1,5 @@
 <script>
+  // fire the finish event following the animationend directive
   import { createEventDispatcher } from 'svelte';
   import { fly } from 'svelte/transition';
   const dispatch = createEventDispatcher();
@@ -9,6 +10,9 @@
 </script>
 
 <style>
+  /* container for the svg elements absolute positioning the elements in the center of the viewport
+  this to avoid a pesky jump as the components are included _before_ the transition is complete
+  */
   .loader {
     color: hsl(195, 100%, 60%);
     display: flex;
@@ -142,9 +146,11 @@
 
 </style>
 
+<!-- fade out the svg elements following a brief delay
+larger delay for the first svg to have the graphic finish its animation (the dispatching function occurs following the first instance of the event)
+-->
 <section class="loader" on:animationend|once={finish}>
-  <!-- svg describing the loader -->
-  <svg out:fly={{delay: 750}} id="loader" viewBox="0 0 100 100" width="180" height="180">
+  <svg out:fly={{delay: 700}} id="loader" viewBox="0 0 100 100" width="180" height="180">
       <!-- define a path element for the individual particle
       this to have control of the individual particles through use elements
       -->

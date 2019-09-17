@@ -1,5 +1,7 @@
 <script>
+  // for the controls dispatch the necessary events to flip || add a new card
   import { createEventDispatcher } from 'svelte';
+  // transition the buttons into view **after** the transition occurring for the deck
   import { fly } from 'svelte/transition';
 
   const dispatch = createEventDispatcher();
@@ -36,6 +38,6 @@
 </style>
 
 <section class="controls">
-    <button in:fly={{delay: 1400}} on:click={flip}>Flip</button>
-    <button in:fly={{delay: 1450}} on:click={newCard}>New Card</button>
+    <button in:fly={{delay: 1000}} on:click={flip}>Flip</button>
+    <button in:fly={{delay: 1030}} on:click={newCard}>New Card</button>
 </section>

@@ -1,24 +1,13 @@
 <script>
-  export let cards;
-
-  import { cubicInOut } from 'svelte/easing';
+  // transition the deck with a delay, to follow up on the fade-out transition of the loader
   import { fly } from 'svelte/transition';
-  const options = {
-    duration: 700,
-    easing: cubicInOut,
-  }
-  function panOut(node, { duration = 700, depth = -200, isFlipped = false }) {
-		return {
-			duration,
-			css: t => {
-				return `
-					transform: rotateY(${isFlipped ? '-180deg' : '0deg'}) translateZ(${isFlipped ? -depth * (1 - cubicInOut(t)) : depth * (1 - cubicInOut(t))}px);
-				`
-			}
-		};
-  }
 
+  // transition the card(s) with custom CSS functions to have the elements slide from the top and then pan out out
+  import { cubicInOut } from 'svelte/easing';
+
+  // in each custom function the value for the time t is used to progressively translate the element in and out of sight
   function slideIn(node, { duration = 700,  depth = 200 }) {
+    // since the transition is used through the in: directive, t is a value in the [0-1] range
 		return {
       duration,
 			css: t => {
@@ -29,6 +18,28 @@
 			}
 		};
   }
+
+  // ! do not alter the opacity for the :out transition, as this would interfere with the 3D transform properties
+  // fade out the faces of the card instead
+  function panOut(node, { duration = 700, depth = -200, isFlipped = false }) {
+    // since the transition is used through the out: directive, t is a value in the [1-0] range
+		return {
+			duration,
+			css: t => {
+				return `
+					transform: rotateY(${isFlipped ? '-180deg' : '0deg'}) translateZ(${isFlipped ? -depth * (1 - cubicInOut(t)) : depth * (1 - cubicInOut(t))}px);
+				`
+			}
+		};
+  }
+  // options for the fade-out transition included for the faces, matching the duration of the panOut function
+  const options = {
+    duration: 700,
+    easing: cubicInOut,
+  }
+
+  // array describing the card(s)
+  export let cards;
 </script>
 
 <style>
@@ -98,9 +109,17 @@
 
 </style>
 
-<main in:fly={{ delay: 1300 }} class="deck">
+<!-- transition the wrapping container to follow up the transition of the loader -->
+<main in:fly={{ delay: 950 }} class="deck">
+  <!-- for each card render an article with two div elements describing the faces
+  ! include the id to have the elements bound to the specific object
+  -->
   {#each cards as card (card.id)}
-    <article in:slideIn out:panOut={{isFlipped: card.isFlipped}} class={card.isFlipped ? 'card flip' : 'card'} bind:this={card.ref}>
+    <!-- have the article slide and pan out with the custom transitions
+    include a class of .flip when the matching boolean is switched to true
+    -->
+    <article in:slideIn out:panOut={{isFlipped: card.isFlipped}} class={card.isFlipped ? 'card flip' : 'card'}>
+        <!-- fade out the faces as the card is removed -->
         <div out:fly={options} class="card__front">
             <h1>{card.number}</h1>
         </div>

@@ -1,8 +1,8 @@
-# From 0 to 1 Hundred
+# [From 0 to 1 Hundred](https://codepen.io/borntofrappe/pen/qBWJWqe)
 
 The project is built in steps, with sub-folders dedicated to different parts of the application.
 
-## [SVG Loader](https://codepen.io/borntofrappe/full/RwbBywm)
+## SVG Loader
 
 Loading screen introducing the animation. The design builds on a concept I [developed first with CSS](https://codepen.io/borntofrappe/pen/yxExMw) and [then refined with SVG](https://codepen.io/borntofrappe/pen/dybJxMv).
 
