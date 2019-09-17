@@ -98,7 +98,7 @@
 
 </style>
 
-<main class="deck">
+<main in:fly={{ delay: 1300 }} class="deck">
   {#each cards as card (card.id)}
     <article in:slideIn out:panOut={{isFlipped: card.isFlipped}} class={card.isFlipped ? 'card flip' : 'card'} bind:this={card.ref}>
         <div out:fly={options} class="card__front">
