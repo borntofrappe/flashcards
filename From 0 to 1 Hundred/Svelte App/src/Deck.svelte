@@ -1,37 +1,48 @@
 <script>
-  function panOut(node, { duration = 500, depth = -200, isFlipped = false }) {
+  export let cards;
+
+  import { cubicInOut } from 'svelte/easing';
+  import { fly } from 'svelte/transition';
+  const options = {
+    duration: 700,
+    easing: cubicInOut,
+  }
+  function panOut(node, { duration = 700, depth = -200, isFlipped = false }) {
 		return {
 			duration,
 			css: t => {
 				return `
-					transform: rotateY(${isFlipped ? '180deg' : '0deg'}) translateZ(${isFlipped ? -depth * (1 - t) : depth * (1 - t)}px);
+					transform: rotateY(${isFlipped ? '-180deg' : '0deg'}) translateZ(${isFlipped ? -depth * (1 - cubicInOut(t)) : depth * (1 - cubicInOut(t))}px);
 				`
 			}
 		};
   }
 
-  function slideIn(node, { duration = 500,  depth = 200 }) {
+  function slideIn(node, { duration = 700,  depth = 200 }) {
 		return {
       duration,
 			css: t => {
         return `
-					opacity: ${t};
-					transform: translateY(-${100 * (1 - t)}%) translateZ(${depth * (1 - t)}px);
+					opacity: ${cubicInOut(t)};
+					transform: translateY(-${100 * (1 - cubicInOut(t))}%) translateZ(${depth * (1 - cubicInOut(t))}px);
 				`
 			}
 		};
   }
-
-  import { fade } from 'svelte/transition';
-
-  export let number;
-  export let french;
-  export let isFlipped;
-  export let ref;
-
 </script>
 
 <style>
+  /* add perspective to the deck, to allow 3d transform properties in the nested elements
+  on top of the perspective style the .deck container to have a width width and height
+  */
+  .deck {
+    perspective: 1000px;
+    position: relative;
+    height: 250px;
+    width: 250px;
+    border-radius: 20px;
+  }
+
   /* absolute position the cards to cover the entirety of the parent's width and height */
   .card {
     padding: 5rem;
@@ -85,19 +96,17 @@
     transform: rotateY(-180deg);
   }
 
-  .card.hidden {
-    transform: translateY(-100%) translateZ(100px);
-    opacity: 0;
-    visibility: hidden;
-  }
 </style>
 
-
-<article in:slideIn out:panOut={{isFlipped}} class={isFlipped ? 'card flip' : 'card'} bind:this={ref}>
-    <div out:fade class="card__front">
-        <h1>{number}</h1>
-    </div>
-    <div out:fade class="card__back">
-        <h2>{french}</h2>
-    </div>
-</article>
+<main class="deck">
+  {#each cards as card (card.id)}
+    <article in:slideIn out:panOut={{isFlipped: card.isFlipped}} class={card.isFlipped ? 'card flip' : 'card'} bind:this={card.ref}>
+        <div out:fly={options} class="card__front">
+            <h1>{card.number}</h1>
+        </div>
+        <div out:fly={options} class="card__back">
+            <h2>{card.french}</h2>
+        </div>
+    </article>
+  {/each}
+</main>
